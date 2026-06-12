@@ -2,11 +2,11 @@
 async function checkAuth() {
   // Tab-specific check — sessionStorage is cleared when tab is closed
   if (!sessionStorage.getItem('loggedIn')) {
-    await fetch('/api/logout', { method: 'POST' }); // clear server session
+    await fetch('/api/logout', { method: 'POST', credentials: 'include' }); // clear server session
     window.location.href = '/login.html';
     throw new Error('Not authenticated');
   }
-  const res = await fetch('/api/records/today');
+  const res = await fetch('/api/records/today', { credentials: 'include' });
   if (res.status === 401) {
     sessionStorage.removeItem('loggedIn');
     window.location.href = '/login.html';
@@ -16,7 +16,7 @@ async function checkAuth() {
 
 async function logout() {
   sessionStorage.removeItem('loggedIn');
-  await fetch('/api/logout', { method: 'POST' });
+  await fetch('/api/logout', { method: 'POST', credentials: 'include' });
   window.location.href = '/login.html';
 }
 
@@ -101,6 +101,7 @@ async function submitRecord() {
   if (incomeVal && parseFloat(incomeVal) > 0) {
     requests.push(fetch('/api/records', {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'income', amount: incomeVal, label: 'Income' })
     }));
@@ -109,6 +110,7 @@ async function submitRecord() {
   if (expenseVal && parseFloat(expenseVal) > 0) {
     requests.push(fetch('/api/records', {
       method: 'POST',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ type: 'expense', amount: expenseVal, label: label || 'Expense' })
     }));
@@ -121,7 +123,7 @@ async function submitRecord() {
   updateUI(data.today, data.week);
 
   // Refresh all-time savings
-  const totalsRes = await fetch('/api/records/totals');
+  const totalsRes = await fetch('/api/records/totals', { credentials: 'include' });
   const totals = await totalsRes.json();
   updateSavings(totals);
 
@@ -152,10 +154,10 @@ async function init() {
   try {
     await checkAuth();
     const [todayRes, weekRes, meRes, totalsRes] = await Promise.all([
-      fetch('/api/records/today'),
-      fetch('/api/records/week'),
-      fetch('/api/me'),
-      fetch('/api/records/totals')
+      fetch('/api/records/today', { credentials: 'include' }),
+      fetch('/api/records/week', { credentials: 'include' }),
+      fetch('/api/me', { credentials: 'include' }),
+      fetch('/api/records/totals', { credentials: 'include' })
     ]);
     const today = await todayRes.json();
     const week = await weekRes.json();
