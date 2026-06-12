@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brokie Wallet</title>
+  <link rel="stylesheet" href="Styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div id="Header">
+    <img src="Logo.png" alt="Brokie Wallet Logo" width="60" height="60">
+    <h1>Brokie Wallet</h1>
+    <span id="username-display"></span>
+    <button id="logout-btn" onclick="logout()">Log Out</button>
+  </div>
+
+  <div id="top-row">
+    <div id="Value-Card">
+      <h2>Today's</h2>
+      <div id="inputs-row">
+        <div id="Income-Card">
+          <h2 style="color: #21DD00;">Income</h2>
+          <input type="text" placeholder="0" id="Income" onkeypress="return isNumberKey(event)">
+        </div>
+        <div id="Expenses-Card">
+          <h2 style="color: #F60000;">Expenses</h2>
+          <input type="text" placeholder="0" id="Expenses" onkeypress="return isNumberKey(event)">
+          <input type="text" placeholder="Spent on What?" id="ExpenseLabel">
+        </div>
+      </div>
+      <button id="Calculate-button" onclick="submitRecord()">Calculate</button>
+    </div>
+
+    <div id="Savings-Card">
+      <h2 style="color: #FF8800;">Savings</h2>
+      <div id="savings-content">
+        <img src="coins.png" width="100" height="100">
+        <p id="Value-Savings">0</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="bottom-row">
+    <div id="Statement-Card">
+      <h2>Expenses</h2>
+      <ul id="List"></ul>
+    </div>
+    <div id="Chart-Card">
+      <canvas id="myChart"></canvas>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="Browser.js"></script>
+</body>
+</html>

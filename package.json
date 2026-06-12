@@ -1,0 +1,16 @@
+{
+  "name": "brokie-wallet",
+  "version": "1.0.0",
+  "description": "Personal income and expense tracker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^17.4.2",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "mysql2": "^3.6.0"
+  }
+}
